@@ -8,7 +8,7 @@
 
 ### WRR Diagrams
 
-![Diagram](public/images/WRR_day_1.png)
+![Diagram](./public/images/WRR_day_1.png)
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
