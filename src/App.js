@@ -4,15 +4,18 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import Header from "./components/Nav"
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      cityData:[],
       city: '',
       display_name: '',
       lat: '',
-      lon: ''
+      lon: '',
+      map_src: '',
     }
   }
 
@@ -35,21 +38,48 @@ class App extends React.Component {
       let cityData = await axios.get(url);
       console.log(cityData.data[0]);
       this.setState({
-        display_name: cityData.data[0].display_name,
-        lat: cityData.data[0].lat,
-        lon: cityData.data[0].lon
+        cityData: cityData.data
       });
+      console.log(this.state.cityData);
     } catch(error) {
       console.log(error);
     }
   }
 
+  cityCards = () => {
+    let cityList = [];
+    for (let i = 0; i < this.state.cityData.length;i++) {
+      cityList.push(
+        <Card style={{ width: "20rem" }}>
+          <Card.Img
+            variant="top"
+            src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData[i].lat},${this.state.cityData[i].lon}&zoom=13`}
+          />
+          <Card.Body>
+            <Card.Title>
+              Result {i+1}: {this.state.cityData[i].display_name}
+            </Card.Title>
+            <Card.Text>
+              <ul>
+                <li>Latitude: {this.state.cityData[i].lat}</li>
+                <li>Longitude: {this.state.cityData[i].lon}</li>
+              </ul>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      );
+    }
+    return cityList;
+  }
 
 
 
   render() {
+    let display_cities = this.cityCards();
     return (
       <>
+        <Header></Header>
+
         <Form onSubmit={this.getCityData}>
           <Form.Group className="mb-3" controlId="formCitySearch">
             <Form.Label>City Name</Form.Label>
@@ -67,19 +97,10 @@ class App extends React.Component {
           </Button>
         </Form>
 
-        <Card style={{ width: "20rem" }}>
-          {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-          <Card.Body>
-            <Card.Title>Best Result:{this.state.display_name}</Card.Title>
-            <Card.Text>
-              <ul>
-                <li>Latitude: {this.state.lat}</li>
-                <li>Longitude: {this.state.lon}</li>
-              </ul>
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </>
+        <div className="cityCards">
+          {display_cities}
+        </div>
+        </>
     );
   }
 }
