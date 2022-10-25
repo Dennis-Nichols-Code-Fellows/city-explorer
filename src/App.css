@@ -1,0 +1,27 @@
+Form {
+  padding: 2vw;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  margin-bottom: 2vw;
+  background-color: lightcyan;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.cityCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+  justify-content: space-around;
+}
+
+.navbar {
+  margin-bottom: 2vw;
+  border-radius: 10px;
+}
+
+.card-body {
+  background-color: lightcyan;
+}

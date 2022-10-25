@@ -4,22 +4,30 @@
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+
+Allows a user to search for a city and returns the top city information such as latitude and longitude. The site will also display a map centered on the city's location.
 
 ### WRR Diagrams
 
 ![Diagram](./public/images/WRR_day_1.png)
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+
+To build this app, one needs to:
+
+- Create a new react app
+- Install the axios and bootstrap libraries
+- Learn how to query the locationIQ API
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+
+- User form input to search a city (bootstrap component)
+- Event handlers to query the LocationIQ API
+- A bootstrap card component to display the location
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
 
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
+- 10-24-22 7:00 PM: Successfully queried and displayed the location information for a single city
+- 10-24-22 8:30 PM: Added functionality to display data for all cities matching the query and added a warning for bad requests.
 
 ## Credit and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
