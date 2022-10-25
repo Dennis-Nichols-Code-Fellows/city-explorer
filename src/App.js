@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import Header from "./components/Nav"
+import Alert from "react-bootstrap/Alert";
 
 class App extends React.Component {
   constructor(props) {
@@ -16,6 +17,8 @@ class App extends React.Component {
       lat: '',
       lon: '',
       map_src: '',
+      error: false,
+      errorMessage: '',
     }
   }
 
@@ -38,11 +41,16 @@ class App extends React.Component {
       let cityData = await axios.get(url);
       console.log(cityData.data[0]);
       this.setState({
-        cityData: cityData.data
+        cityData: cityData.data,
+        error: false
       });
       console.log(this.state.cityData);
     } catch(error) {
       console.log(error);
+       this.setState({
+         error: true,
+         errorMessage: error.message,
+       });
     }
   }
 
@@ -96,10 +104,18 @@ class App extends React.Component {
             Explore!
           </Button>
         </Form>
-
+      
+        {
+        this.state.error
+        ?
+        <Alert variant='warning'>
+        {this.state.errorMessage}
+        </Alert>
+        :
         <div className="cityCards">
           {display_cities}
         </div>
+        }
         </>
     );
   }
