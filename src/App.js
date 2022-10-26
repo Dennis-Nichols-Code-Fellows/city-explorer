@@ -62,7 +62,7 @@ class App extends React.Component {
 
   getWeather = async () => {
     try { 
-       let weather_url = `http://localhost:3001/weather?searchQuery=${this.state.city}&lat=${this.state.cityData[0].lat}&lon=${this.state.cityData[0].lon}`;
+       let weather_url = `${process.env.REACT_APP_SERVER}weather?searchQuery=${this.state.city}&lat=${this.state.cityData[0].lat}&lon=${this.state.cityData[0].lon}`;
       let weather_data = await axios.get(weather_url);
       this.setState({
         weatherData: weather_data.data
