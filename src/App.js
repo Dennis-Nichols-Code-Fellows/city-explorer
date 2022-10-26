@@ -1,25 +1,28 @@
 import React from "react";
 import "./App.css";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
-import Header from "./components/Nav"
+import Header from "./components/Nav";
 import Alert from "react-bootstrap/Alert";
+import FormComponent from "./components/Form";
+import Weather from './components/Weather';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cityData:[],
-      city: '',
-      display_name: '',
-      lat: '',
-      lon: '',
-      map_src: '',
+      cityData: [],
+      city: "",
+      display_name: "",
+      lat: "",
+      lon: "",
+      map_src: "",
       error: false,
-      errorMessage: '',
-    }
+      errorMessage: "",
+      weatherData: [],
+      weather_error: false,
+      weatherMessage: '',
+    };
   }
 
   // handlers
@@ -27,9 +30,9 @@ class App extends React.Component {
   handleInput = async (e) => {
     e.preventDefault();
     this.setState({
-      city: e.target.value
+      city: e.target.value,
     });
-  }
+  };
 
   getCityData = async (e) => {
     e.preventDefault();
@@ -42,21 +45,40 @@ class App extends React.Component {
       console.log(cityData.data[0]);
       this.setState({
         cityData: cityData.data,
-        error: false
-      });
-      console.log(this.state.cityData);
-    } catch(error) {
-      console.log(error);
-       this.setState({
-         error: true,
-         errorMessage: error.message,
-       });
-    }
-  }
+        error: false,
+      },this.getWeather);
 
+     
+
+      console.log(this.state.cityData);
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: error.message,
+      });
+    }
+    
+  };
+
+  getWeather = async () => {
+    try { 
+       let weather_url = `http://localhost:3001/weather?searchQuery=${this.state.city}&lat=${this.state.cityData[0].lat}&lon=${this.state.cityData[0].lon}`;
+      let weather_data = await axios.get(weather_url);
+      this.setState({
+        weatherData: weather_data.data
+      });
+    }  catch (error) {
+         this.setState({
+           weather_error: true,
+           weatherMessage: error.message,
+         });
+    }
+   
+  }
+  
   cityCards = () => {
     let cityList = [];
-    for (let i = 0; i < this.state.cityData.length;i++) {
+    for (let i = 0; i < this.state.cityData.length; i++) {
       cityList.push(
         <Card style={{ width: "20rem" }}>
           <Card.Img
@@ -65,7 +87,7 @@ class App extends React.Component {
           />
           <Card.Body>
             <Card.Title>
-              Result {i+1}: {this.state.cityData[i].display_name}
+              Result {i + 1}: {this.state.cityData[i].display_name}
             </Card.Title>
             <Card.Text>
               <ul>
@@ -78,45 +100,39 @@ class App extends React.Component {
       );
     }
     return cityList;
-  }
+  };
 
+  // displayWeather = () => {
+  //   if (this.state.weatherData) {
+  //     return <Weather weatherData={this.state.weatherData}></Weather>;
+  //   }
+  // }
 
+  // Render
 
   render() {
     let display_cities = this.cityCards();
+    console.log(this.state.weatherData);
     return (
       <>
         <Header></Header>
+        <div className="formContainer">
+          <FormComponent
+            getCityData={this.getCityData}
+            handleInput={this.handleInput}
+          ></FormComponent>
 
-        <Form onSubmit={this.getCityData}>
-          <Form.Group className="mb-3" controlId="formCitySearch">
-            <Form.Label>City Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter a city name..."
-              onInput={this.handleInput}
-            />
-            <Form.Text className="text-muted">
-              If it's a word, it's probably a city...
-            </Form.Text>
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Explore!
-          </Button>
-        </Form>
-      
-        {
-        this.state.error
-        ?
-        <Alert variant='warning'>
-        {this.state.errorMessage}
-        </Alert>
-        :
-        <div className="cityCards">
-          {display_cities}
+           {this.state.weatherData.length && <Weather weatherData={this.state.weatherData}></Weather>}
+          
         </div>
-        }
-        </>
+        {/* {weather} */}
+        {this.state.error ? (
+          <Alert variant="warning">{this.state.errorMessage}</Alert>
+        ) : (
+          <div className="cityCards">{display_cities}</div>
+        )}
+    
+      </>
     );
   }
 }
