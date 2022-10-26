@@ -1,7 +1,5 @@
 import React from "react";
 import "./App.css";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import Header from "./components/Nav";
@@ -125,7 +123,7 @@ class App extends React.Component {
           ></FormComponent>
 
            {this.state.weatherData.length && <Weather weatherData={this.state.weatherData}></Weather>}
-           
+          
         </div>
         {/* {weather} */}
         {this.state.error ? (
