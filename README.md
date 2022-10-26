@@ -1,7 +1,7 @@
 # City Explorer
 
 **Author**: Dennis Nichols
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 1.1.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
 
@@ -29,5 +29,6 @@ To build this app, one needs to:
 
 - 10-24-22 7:00 PM: Successfully queried and displayed the location information for a single city
 - 10-24-22 8:30 PM: Added functionality to display data for all cities matching the query and added a warning for bad requests.
+- 10-25-22 8:30 PM: App connected to new API for weather data through Heroku.
 
 ## Credit and Collaborations
