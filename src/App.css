@@ -37,22 +37,27 @@ Form {
 
 .carousel.slide {
   margin: auto;
-  width: 70vw;
+  width: 60vw;
 
 }
 .d-block.w-50 {
   margin: auto;
-  height: 70vh;
+  height: 60vh;
   aspect-ratio: auto;
 }
 
 .carousel-caption {
     position: absolute;
     right: 15%;
-    bottom: 1.25rem;
-    left: 15%;
+    bottom: 0% !important;
+    left: 25% !important;
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
-    color: yellow;
     text-align: center;
+    background-color: rgba(1, 1, 1, 0.5);
+    width: 50%;
+}
+
+.carousel-caption h3 {
+  color: lightcyan;
 }
