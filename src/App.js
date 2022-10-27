@@ -145,6 +145,7 @@ class App extends React.Component {
           <Weather weatherData={this.state.weatherData}></Weather>
         )}
 
+        
         {this.state.movieData.length && (
           <Movies movieData={this.state.movieData}></Movies>
         )}

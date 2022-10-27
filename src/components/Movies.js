@@ -8,7 +8,8 @@ class Movies extends React.Component {
   for (let i = 0; i < this.props.movieData.length; i++) {
     let img_url ='';
     if (this.props.movieData[i].poster_path) {img_url = this.props.movieData[i].poster_url}
-    else img_url = './public/images/action.jpg';
+    else img_url =
+      "https://i.picsum.photos/id/214/2729/2047.jpg?hmac=sbADnAldkjZ_C8bOEoXFBSHedcFRZYO_GPg3eHwQ5m0";
 
     items.push(
       <Carousel.Item>
