@@ -6,6 +6,7 @@ import Header from "./components/Nav";
 import Alert from "react-bootstrap/Alert";
 import FormComponent from "./components/Form";
 import Weather from './components/Weather';
+import Movies from "./components/Movies";
 
 class App extends React.Component {
   constructor(props) {
@@ -21,7 +22,10 @@ class App extends React.Component {
       errorMessage: "",
       weatherData: [],
       weather_error: false,
-      weatherMessage: '',
+      weatherMessage: "",
+      movieData: [],
+      movie_error: false,
+      movieMessage: "",
     };
   }
 
@@ -43,12 +47,13 @@ class App extends React.Component {
 
       let cityData = await axios.get(url);
       console.log(cityData.data[0]);
-      this.setState({
-        cityData: cityData.data,
-        error: false,
-      },this.getWeather);
-
-     
+      this.setState(
+        {
+          cityData: cityData.data,
+          error: false,
+        },
+        this.getSecondaryData
+      );
 
       console.log(this.state.cityData);
     } catch (error) {
@@ -57,25 +62,44 @@ class App extends React.Component {
         errorMessage: error.message,
       });
     }
-    
   };
 
   getWeather = async () => {
-    try { 
-       let weather_url = `${process.env.REACT_APP_SERVER}weather?searchQuery=${this.state.city}&lat=${this.state.cityData[0].lat}&lon=${this.state.cityData[0].lon}`;
+    try {
+      let weather_url = `${process.env.REACT_APP_SERVER}weather?lat=${this.state.cityData[0].lat}&lon=${this.state.cityData[0].lon}`;
       let weather_data = await axios.get(weather_url);
       this.setState({
-        weatherData: weather_data.data
+        weatherData: weather_data.data,
       });
-    }  catch (error) {
-         this.setState({
-           weather_error: true,
-           weatherMessage: error.message,
-         });
+    } catch (error) {
+      this.setState({
+        weather_error: true,
+        weatherMessage: error.message,
+      });
     }
-   
+  };
+
+  getMovies = async () => {
+    try {
+      let movie_url = `${process.env.REACT_APP_SERVER}movies?searchQuery=${this.state.city}`;
+      let movie_data = await axios.get(movie_url);
+      console.log(movie_data);
+      this.setState({
+        movieData: movie_data.data,
+      });
+    } catch (error) {
+      this.setState({
+        movie_error: true,
+        movieMessage: error.message,
+      });
+    }
+  };
+
+  getSecondaryData = () => {
+    this.getWeather();
+    this.getMovies();
   }
-  
+
   cityCards = () => {
     let cityList = [];
     for (let i = 0; i < this.state.cityData.length; i++) {
@@ -102,13 +126,7 @@ class App extends React.Component {
     return cityList;
   };
 
-  // displayWeather = () => {
-  //   if (this.state.weatherData) {
-  //     return <Weather weatherData={this.state.weatherData}></Weather>;
-  //   }
-  // }
 
-  // Render
 
   render() {
     let display_cities = this.cityCards();
@@ -121,17 +139,21 @@ class App extends React.Component {
             getCityData={this.getCityData}
             handleInput={this.handleInput}
           ></FormComponent>
-
-           {this.state.weatherData.length && <Weather weatherData={this.state.weatherData}></Weather>}
-          
         </div>
-        {/* {weather} */}
+
+        {this.state.weatherData.length && (
+          <Weather weatherData={this.state.weatherData}></Weather>
+        )}
+
+        {this.state.movieData.length && (
+          <Movies movieData={this.state.movieData}></Movies>
+        )}
+
         {this.state.error ? (
           <Alert variant="warning">{this.state.errorMessage}</Alert>
         ) : (
           <div className="cityCards">{display_cities}</div>
         )}
-    
       </>
     );
   }

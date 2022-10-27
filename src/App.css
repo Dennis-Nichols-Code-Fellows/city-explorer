@@ -34,3 +34,25 @@ Form {
 .accordion-header {
   background-color: lightcyan;
 }
+
+.carousel.slide {
+  margin: auto;
+  width: 70vw;
+
+}
+.d-block.w-50 {
+  margin: auto;
+  height: 70vh;
+  aspect-ratio: auto;
+}
+
+.carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: 1.25rem;
+    left: 15%;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    color: yellow;
+    text-align: center;
+}
