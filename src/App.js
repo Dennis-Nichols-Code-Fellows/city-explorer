@@ -85,7 +85,7 @@ class App extends React.Component {
       let movie_data = await axios.get(movie_url);
       console.log(movie_data);
       this.setState({
-        movieData: movie_data.data,
+        movieData: movie_data.data.data,
       });
     } catch (error) {
       this.setState({
