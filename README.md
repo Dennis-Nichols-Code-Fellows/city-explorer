@@ -1,7 +1,7 @@
 # City Explorer
 
 **Author**: Dennis Nichols
-**Version**: 1.2.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 1.4.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
 
@@ -32,6 +32,9 @@ To build this app, one needs to:
 - 10-24-22 8:30 PM: Added functionality to display data for all cities matching the query and added a warning for bad requests.
 - 10-25-22 8:30 PM: App connected to new API for weather data through Heroku.
 - 10-26-22 8:30 PM: App connected to new API for weatherbit and movie data through Heroku.
-- 10-26-229:30 PM: Updated front end UI with carousel.
+- 10-26-22 9:30 PM: Updated front end UI with carousel.
+- 10-30-22 4:00 PM: Tweaked data variables to reconnect with API
 
 ## Credit and Collaborations
+
+- Received some help on this from Elias, Seth, Lewis, and Steven here and there.
